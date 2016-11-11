@@ -88,14 +88,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        android.app.FragmentManager fragmentManager = getFragmentManager();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        if (id == R.id.nav_home) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, new FirstFragment())
+                    .commit();
+        } else if (id == R.id.nav_setting) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, new SecondFragment())
+                    .commit();
 
         } else if (id == R.id.nav_share) {
 
