@@ -1,5 +1,7 @@
 package id.sch.smktelkom_mlg.project.xirpl102112029.wakemeup;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,9 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TimePicker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    TimePicker alarmTimePicker;
+    PendingIntent pendingIntent;
+    AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        alarmTimePicker = (TimePicker) findViewById(R.id.timeJumuk);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
