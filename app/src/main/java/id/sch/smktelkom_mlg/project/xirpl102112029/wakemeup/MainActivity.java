@@ -1,11 +1,9 @@
 package id.sch.smktelkom_mlg.project.xirpl102112029.wakemeup;
 
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
-import android.icu.util.Calendar;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,15 +16,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    TimePicker alarmTimePicker;
-    PendingIntent pendingIntent;
-    AlarmManager alarmManager;
+    final static int RQS_1 = 1;
+    DatePicker pickerDate;
+    TimePicker pickerTime;
+    Button buttonSetAlarm;
+    Button buttonOffAlarm;
+    TextView info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,49 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        alarmTimePicker = (TimePicker) findViewById(R.id.timeJumuk);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        info = (TextView) findViewById(R.id.info);
+        pickerDate = (DatePicker) findViewById(R.id.pickerdate);
+        pickerTime = (TimePicker) findViewById(R.id.pickertime);
+
+        Calendar now = Calendar.getInstance();
+
+        pickerDate.init(
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH),
+                null);
+
+        pickerTime.setCurrentHour(now.get(Calendar.HOUR_OF_DAY));
+        pickerTime.setCurrentMinute(now.get(Calendar.MINUTE));
+
+        buttonSetAlarm = (Button) findViewById(R.id.setalarm);
+        buttonOffAlarm = (Button) findViewById(R.id.buttonOff);
+        buttonSetAlarm.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Calendar current = Calendar.getInstance();
+
+                Calendar cal = Calendar.getInstance();
+                cal.set(pickerDate.getYear(),
+                        pickerDate.getMonth(),
+                        pickerDate.getDayOfMonth(),
+                        pickerTime.getCurrentHour(),
+                        pickerTime.getCurrentMinute(),
+                        00);
+
+                if (cal.compareTo(current) <= 0) {
+                    //The set Date/Time already passed
+                    Toast.makeText(getApplicationContext(),
+                            "Invalid Date/Time",
+                            Toast.LENGTH_LONG).show();
+                } else {
+
+                    setAlarm(cal);
+                }
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,34 +103,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
-    public void OnToggleClicked(View view)
-    {
-        long time;
-        if (((ToggleButton) view).isChecked())
-        {
-            Toast.makeText(MainActivity.this, "ALARM ON", Toast.LENGTH_SHORT).show();
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-            calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-            Intent intent = new Intent(this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+    private void setAlarm(Calendar targetCal) {
 
-            time=(calendar.getTimeInMillis()-(calendar.getTimeInMillis()%60000));
-            if(System.currentTimeMillis()>time)
-            {
-                if (calendar.AM_PM == 0)
-                    time = time + (1000*60*60*12);
-                else
-                    time = time + (1000*60*60*24);
-            }
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time, 10000, pendingIntent);
-        }
-        else
-        {
-            alarmManager.cancel(pendingIntent);
-            Toast.makeText(MainActivity.this, "ALARM OFF", Toast.LENGTH_SHORT).show();
-        }
+        info.setText("\n\n***\n"
+                + "Alarm is set@ " + targetCal.getTime() + "\n"
+                + "***\n");
+
+        Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
     }
 
 
