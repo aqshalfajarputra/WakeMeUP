@@ -12,6 +12,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="sensorPortrait"
+            android:showOnLockScreen="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +23,14 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
-            android:process=":remote"></receiver>
+            android:name=".AlarmReciever"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+            </intent-filter>
+
+        </receiver>
         <service
             android:name=".RingtonePlayingService"
             android:enabled="true">

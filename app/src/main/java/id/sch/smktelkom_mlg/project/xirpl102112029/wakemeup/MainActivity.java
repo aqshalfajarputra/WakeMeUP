@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -33,27 +32,25 @@ public class MainActivity extends AppCompatActivity
     TimePicker pickerTime;
     Button buttonSetAlarm;
     Button buttonOffAlarm;
+    AlarmManager alarmManager;
     TextView info;
+    Context context;
+    PendingIntent pendingIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN |
-                        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN |
-                        WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
-                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         info = (TextView) findViewById(R.id.info);
         pickerDate = (DatePicker) findViewById(R.id.pickerdate);
         pickerTime = (TimePicker) findViewById(R.id.pickertime);
+
 
         Calendar now = Calendar.getInstance();
 
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         buttonSetAlarm.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View view) {
                 Calendar current = Calendar.getInstance();
 
                 Calendar cal = Calendar.getInstance();
@@ -95,6 +92,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+        buttonOffAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelAlarm();
+
+            }
+        });
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,15 +121,24 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    private void cancelAlarm() {
+        Intent intent = new Intent(getBaseContext(), AlarmReciever.class);
+        intent.putExtra("extra", "off");
+        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+        alarmManager.cancel(pendingIntent);
+        sendBroadcast(intent);
+    }
+
+
     private void setAlarm(Calendar targetCal) {
 
         info.setText("\n\n***\n"
                 + "Alarm is set@ " + targetCal.getTime() + "\n"
                 + "***\n");
 
-        Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getBaseContext(), AlarmReciever.class);
+        intent.putExtra("extra", "on");
+        pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
     }
 
