@@ -62,16 +62,21 @@ public class QuizActivity extends AppCompatActivity {
     private void pindah() {
         Intent intent = new Intent(getBaseContext(), QuizActivity2.class);
         startActivity(intent);
+        finish();
     }
 
     private void pindah2() {
         Intent intent = new Intent(getBaseContext(), QuizActivity2.class);
         startActivity(intent);
+        finish();
+
     }
 
     private void pindah3() {
         Intent intent = new Intent(getBaseContext(), QuizActivity3.class);
         startActivity(intent);
+        finish();
+
     }
 
 
