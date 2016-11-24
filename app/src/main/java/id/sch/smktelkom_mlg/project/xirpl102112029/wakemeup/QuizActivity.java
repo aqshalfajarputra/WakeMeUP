@@ -38,7 +38,7 @@ public class QuizActivity extends AppCompatActivity {
         jaw1c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(getBaseContext(), AlarmReciever.class);
+                intent = new Intent(getBaseContext(), RingtonePlayingService.class);
                 intent.putExtra("extra", "off");
                 pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
                 alarmManager.cancel(pendingIntent);
