@@ -14,37 +14,45 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Jawab dan Matikan alarm" />
+        android:text="Jawab dan Matikan alarm"
+        android:textColor="@color/colorAccent" />
 
 
     <TextView
         android:id="@+id/soal1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Presiden pertama USA" />
+        android:paddingBottom="20dp"
+        android:text="Presiden pertama USA adalah ?"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/jaw1a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bill Clinton" />
+        android:text="Bill Clinton"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw1b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="John F Kennedy" />
+        android:text="John F Kennedy"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw1c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="George Washington" />
+        android:text="George Washington"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw1d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Abraham Lincoln" />
+        android:text="Abraham Lincoln"
+        android:textColor="@color/colorAccent" />
 
 </LinearLayout>

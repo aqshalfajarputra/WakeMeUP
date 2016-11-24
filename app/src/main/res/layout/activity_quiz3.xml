@@ -14,37 +14,45 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Jawab dan Matikan alarm" />
+        android:text="Jawab dan Matikan alarm"
+        android:textColor="@color/colorAccent" />
 
 
     <TextView
         android:id="@+id/soal3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Luas lingkaran berjari jari 7 cm" />
+        android:paddingBottom="20dp"
+        android:text="Luas lingkaran berjari jari 7 cm adalah?"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/jaw3a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="154 cm^2" />
+        android:text="154 cm^2"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw3b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="144 cm^2" />
+        android:text="144 cm^2"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw3c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="166 cm^2" />
+        android:text="166 cm^2"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw3d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="164 cm^2" />
+        android:text="164 cm^2"
+        android:textColor="@color/colorAccent" />
 
 </LinearLayout>

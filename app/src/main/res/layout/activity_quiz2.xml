@@ -14,36 +14,44 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Jawab dan Matikan alarm" />
+        android:text="Jawab dan Matikan alarm"
+        android:textColor="@color/colorAccent" />
 
 
     <TextView
         android:id="@+id/soal2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Yang bukan kawasan di eropa" />
+        android:paddingBottom="20dp"
+        android:text="Yang bukan kawasan di eropa adalah?"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/jaw2a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scandinavia" />
+        android:text="Scandinavia"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw2b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Benelux" />
+        android:text="Benelux"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw2c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Great Britain" />
+        android:text="Great Britain"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/jaw2d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="East Siberia" />
+        android:text="East Siberia"
+        android:textColor="@color/colorAccent" />
 </LinearLayout>
